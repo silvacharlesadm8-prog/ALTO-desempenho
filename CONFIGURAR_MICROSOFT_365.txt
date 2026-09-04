@@ -1,0 +1,54 @@
+ALTO DESEMPENHO - INTEGRAÇÃO COM TEAMS / OUTLOOK
+=================================================
+
+O QUE ESTA VERSÃO IMPORTA
+-------------------------
+- Data do compromisso
+- Horário inicial e final
+- Situação: Ocupado, Provisório, Fora do escritório ou Outro local
+
+O aplicativo não solicita assunto, participantes ou descrição do compromisso.
+Os compromissos manuais continuam funcionando normalmente.
+
+PRÉ-REQUISITO DA TI
+-------------------
+Solicite à TI o cadastro de um aplicativo no Microsoft Entra ID com:
+
+1. Tipo de conta: somente contas deste diretório organizacional.
+2. Plataforma: aplicativo móvel e da área de trabalho.
+3. URI de redirecionamento: http://localhost
+4. Permitir fluxos de cliente público: Sim.
+5. Permissão delegada do Microsoft Graph: Calendars.ReadBasic.
+
+Peça à TI estes dois valores:
+- ID do diretório (Tenant ID)
+- ID do aplicativo (Client ID)
+
+COMO CONECTAR NO ALTO DESEMPENHO
+--------------------------------
+1. Abra o aplicativo.
+2. Entre em Agenda da gerente.
+3. Abra a aba Sincronizar Microsoft 365.
+4. Preencha Tenant ID, Client ID e o e-mail corporativo da gerente.
+5. Clique em Salvar configuração.
+6. Clique em Conectar conta corporativa.
+7. Faça login na janela oficial da Microsoft que será aberta.
+8. Escolha o período e clique em Sincronizar disponibilidade.
+
+SEGURANÇA
+---------
+- O aplicativo nunca recebe nem armazena sua senha.
+- O token de acesso fica somente no computador, no arquivo local
+  .m365_token_cache.bin.
+- O botão Desconectar remove esse token.
+
+ATUALIZAÇÃO DO PROJETO
+----------------------
+Copie os arquivos deste pacote para a pasta ALTO_DESEMPENHO e substitua os arquivos
+de mesmo nome. Não apague nem substitua a pasta dados, pois ela contém os
+registros do aplicativo.
+
+Depois, com a .venv ativada, execute:
+
+python -m pip install -r requirements.txt
+python -m streamlit run app.py

@@ -1,0 +1,31 @@
+ALTO DESEMPENHO — VERSÃO OFICIAL COM BANCO PERMANENTE
+======================================================
+
+Esta versão preserva a interface original e pode trabalhar de duas formas:
+
+1. Sem SQLITECLOUD_URL configurada:
+   usa o arquivo local dados/sge_geo.db, adequado apenas para testes locais.
+
+2. Com SQLITECLOUD_URL configurada:
+   usa um banco SQLite Cloud permanente e compartilhado. Essa é a configuração
+   indicada para o aplicativo publicado e acessado por toda a equipe.
+
+PRÓXIMA ETAPA
+-------------
+1. Criar a conta e o banco no SQLite Cloud.
+2. Importar o arquivo dados/sge_geo.db para preservar os dados já registrados.
+3. Copiar a URL de conexão do banco.
+4. No Streamlit Cloud, abrir o aplicativo e acessar:
+   Configurações > Segredos.
+5. Cadastrar:
+
+   SQLITECLOUD_URL = "sqlitecloud://..."
+
+6. Salvar e reiniciar o aplicativo.
+
+IMPORTANTE
+----------
+- Nunca coloque a URL real ou a chave dentro do GitHub.
+- O arquivo .streamlit/secrets.toml.example contém apenas um modelo.
+- A gerente e os demais usuários verão os mesmos dados no banco permanente.
+- Não use um arquivo SQLite sincronizado pelo OneDrive para acessos simultâneos.
