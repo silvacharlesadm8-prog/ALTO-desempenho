@@ -67,7 +67,8 @@ CAMINHO_LOGO = PASTA_APP / "assets" / "alto_desempenho_symbol.png"
 
 st.set_page_config(
     page_title="ALTO DESEMPENHO",
-    page_icon=str(CAMINHO_LOGO) if CAMINHO_LOGO.is_file() else "📈",
+    # Emoji evita o MediaFileStorageError do Streamlit Cloud após reinícios.
+    page_icon="📈",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -121,8 +122,8 @@ if st.query_params.get("pagina") == "entregaveis_d1":
 # ============================================================
 
 with st.sidebar:
-    if CAMINHO_LOGO.is_file():
-        st.image(str(CAMINHO_LOGO), width=150)
+    # A logo em arquivo foi temporariamente desativada porque o gerenciador
+    # de mídia do Streamlit Cloud perdia a referência após cada reinício.
     renderizar_html(
         """
         <div class="marca">
@@ -3326,23 +3327,20 @@ def pagina_em_construcao(
 # NAVEGAÇÃO
 # ============================================================
 
-if pagina == "Início":
-    pagina_inicio()
+PAGINAS = {
+    "Início": pagina_inicio,
+    "Direcionamento": pagina_direcionamento,
+    "Minha semana": pagina_minha_semana,
+    "Equipe": pagina_equipe,
+    "Entregáveis D-1": pagina_entregaveis_d1,
+    "Agenda da gerente": pagina_agenda_gerente,
+    "Indicadores": pagina_indicadores,
+}
 
-elif pagina == "Direcionamento":
-    pagina_direcionamento()
-
-elif pagina == "Minha semana":
-    pagina_minha_semana()
-
-elif pagina == "Equipe":
-    pagina_equipe()
-
-elif pagina == "Entregáveis D-1":
-    pagina_entregaveis_d1()
-
-elif pagina == "Agenda da gerente":
-    pagina_agenda_gerente()
-
-elif pagina == "Indicadores":
-    pagina_indicadores()
+try:
+    PAGINAS[pagina]()
+except Exception as erro:
+    st.error(
+        "Esta página encontrou um erro, mas o restante do aplicativo continua disponível."
+    )
+    st.exception(erro)
