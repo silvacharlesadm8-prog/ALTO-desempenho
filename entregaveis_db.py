@@ -390,7 +390,12 @@ def gerar_ocorrencias_modelo(modelo_id, ano, mes):
                 """,
                 (modelo["id"], modelo["responsavel_id"], modelo["titulo"], data_prevista.isoformat()),
             )
-            quantidade += cursor.rowcount
+            # O SQLite local retorna 0/1 em rowcount. Alguns drivers do
+            # SQLite Cloud retornam None ou -1 mesmo quando a operação foi
+            # executada corretamente. A contagem é apenas informativa e não
+            # pode impedir a abertura do painel.
+            linhas_afetadas = getattr(cursor, "rowcount", 0)
+            quantidade += max(int(linhas_afetadas or 0), 0)
         conexao.commit()
     return quantidade
 
