@@ -73,9 +73,21 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-inicializar_banco()
-inicializar_modulo_compromissos()
-inicializar_modulo_entregaveis()
+@st.cache_resource(show_spinner=False)
+def inicializar_aplicativo():
+    """Prepara as tabelas apenas uma vez por processo do Streamlit.
+
+    O Streamlit executa este arquivo novamente a cada clique. Sem o cache,
+    todas as instruções de criação/migração eram reenviadas ao SQLite Cloud,
+    podendo bloquear a sessão e deixar a interface preta.
+    """
+    inicializar_banco()
+    inicializar_modulo_compromissos()
+    inicializar_modulo_entregaveis()
+    return True
+
+
+inicializar_aplicativo()
 
 
 # ============================================================
