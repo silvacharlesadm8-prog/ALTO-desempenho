@@ -1,6 +1,7 @@
 from calendar import monthrange
 from datetime import date, datetime, time, timedelta
 from html import escape
+from pathlib import Path
 from textwrap import dedent
 
 import pandas as pd
@@ -61,9 +62,12 @@ from entregaveis_db import (
 # CONFIGURAÇÃO
 # ============================================================
 
+PASTA_APP = Path(__file__).resolve().parent
+CAMINHO_LOGO = PASTA_APP / "assets" / "alto_desempenho_symbol.png"
+
 st.set_page_config(
     page_title="ALTO DESEMPENHO",
-    page_icon="assets/alto_desempenho_symbol.png",
+    page_icon=str(CAMINHO_LOGO) if CAMINHO_LOGO.is_file() else "📈",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -117,7 +121,8 @@ if st.query_params.get("pagina") == "entregaveis_d1":
 # ============================================================
 
 with st.sidebar:
-    st.image("assets/alto_desempenho_symbol.png", width=150)
+    if CAMINHO_LOGO.is_file():
+        st.image(str(CAMINHO_LOGO), width=150)
     renderizar_html(
         """
         <div class="marca">
